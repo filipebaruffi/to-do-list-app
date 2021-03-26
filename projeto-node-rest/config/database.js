@@ -16,7 +16,7 @@ module.exports = {
   | interacting with SQL databases.
   |
   */
-  connection: Env.get('DB_CONNECTION', 'sqlite'),
+  connection: Env.get('DB_CONNECTION', 'mysql'),
 
   /*
   |--------------------------------------------------------------------------
@@ -29,14 +29,14 @@ module.exports = {
   | npm i --save sqlite3
   |
   */
-  sqlite: {
-    client: 'sqlite3',
-    connection: {
-      filename: Helpers.databasePath(`${Env.get('DB_DATABASE', 'development')}.sqlite`)
-    },
-    useNullAsDefault: true,
-    debug: Env.get('DB_DEBUG', false)
-  },
+  // sqlite: {
+  //   client: ,
+  //   connection: {
+  //     filename: Helpers.databasePath(`${Env.get('projeto-to-do-list', 'development')}.mysql`)
+  //   },
+  //   useNullAsDefault: true,
+  //   debug: Env.get('DB_DEBUG', false)
+  // },
 
   /*
   |--------------------------------------------------------------------------
@@ -52,10 +52,10 @@ module.exports = {
     client: 'mysql',
     connection: {
       host: Env.get('DB_HOST', 'localhost'),
-      port: Env.get('DB_PORT', ''),
+      port: Env.get('DB_PORT', '3306'),
       user: Env.get('DB_USER', 'root'),
-      password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
+      password: Env.get('DB_PASSWORD', '93204041a'),
+      database: Env.get('DB_DATABASE', 'todolist')
     },
     debug: Env.get('DB_DEBUG', false)
   },
