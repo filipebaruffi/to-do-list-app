@@ -18,7 +18,9 @@ class CardController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ request, response }) {
+    const data = await Card.all()
+    return data
   }
 
   /**
