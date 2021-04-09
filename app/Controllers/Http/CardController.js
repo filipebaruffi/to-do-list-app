@@ -1,6 +1,6 @@
-'use strict'
+"use strict";
 
-const Card = use('App/Models/Card')
+const Card = use("App/Models/Card");
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -18,9 +18,10 @@ class CardController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response }) {
-    const data = await Card.all()
-    return data
+  async index({ request, response }) {
+    const termo = request.get();
+    const data = await Card.search(termo);
+    return data;
   }
 
   /**
@@ -32,11 +33,11 @@ class CardController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-   async store ({ request, response }) {
-    const data = request.only(['title','color_rgb'])
-    const card = await Card.create(data)
+  async store({ request, response }) {
+    const data = request.only(["title", "color_rgb"]);
+    const card = await Card.create(data);
     return card;
-}
+  }
   /**
    * Create/save a new card.
    * POST cards
@@ -45,7 +46,6 @@ class CardController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-
 
   /**
    * Display a single card.
@@ -56,19 +56,9 @@ class CardController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing card.
-   * GET cards/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async show({ params }) {
+    const data = await Card.findOrFail(params.id);
+    return data;
   }
 
   /**
@@ -79,7 +69,12 @@ class CardController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
+    const data = await Card.findOrFail(params.id);
+    const update = request.only(["title", "color_rgb"]);
+    data.merge(update);
+    await data.save();
+    return response.send({ message: "Card alterado com sucesso!" });
   }
 
   /**
@@ -90,8 +85,7 @@ class CardController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-  }
+  async destroy({ params, response }) {}
 }
 
-module.exports = CardController
+module.exports = CardController;
