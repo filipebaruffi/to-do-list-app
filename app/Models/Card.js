@@ -1,12 +1,12 @@
 "use strict";
-import { isEmpty } from "../../helpers/isEmpty";
+var lodash = require("lodash");
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use("Model");
 
 class Card extends Model {
     static search(termo) {
-        if (isEmpty(termo)) {
+        if (!lodash.isEmpty(termo)) {
             console.log(termo);
             const card = this.query()
                 .where("title", "LIKE", "%" + termo.termo + "%")
